@@ -1,0 +1,67 @@
+.main {
+  background: #fcc60f;
+  height: 296px;
+  padding-bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  max-width: 1280px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icons {
+  margin-top: 67px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: center;
+}
+.icon {
+  margin-left: 7px;
+  margin-right: 7px;
+  width: 20px;
+  height: 20px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
+  padding: 9px 0 9px 0;
+}
+.icon:hover {
+  fill: #ffff;
+  transition: 0.5s all;
+  border-bottom: 2px solid white;
+  cursor: pointer;
+}
+.teacherInfo {
+  text-align: center;
+  font-size: 11px;
+  color: rgb(21, 21, 21);
+  font-weight: 700;
+  line-height: 2.182;
+}
+.devInfo {
+  margin-top: 56px;
+}
+.devInfoContainer {
+  display: flex;
+  font-size: 11px;
+  color: rgb(21, 21, 21);
+  font-weight: bold;
+  line-height: 2.182;
+}
+.security {
+  text-align: center;
+  font-size: 11px;
+  color: rgba(111, 86, 1, 0.851);
+  font-weight: bold;
+  line-height: 2.182;
+}
+.devLogo {
+  height: 12px;
+  margin-top: 5px;
+  margin-left: 8px;
+}

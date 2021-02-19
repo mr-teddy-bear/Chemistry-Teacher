@@ -1,0 +1,8 @@
+export const LOGIN_REQUEST = "LOGIN_REQUEST";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILURE = "LOGIN_FAILURE";
+
+export const TOGGLE_CHEM_MODAL = "TOGGLE_CHEM_MODAL";
+export const TOGGLE_BIO_MODAL = "TOGGLE_BIO_MODAL";
+
+export const LOG_OUT = "LOG_OUT";

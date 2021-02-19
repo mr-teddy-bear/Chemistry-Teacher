@@ -15,8 +15,8 @@ import tick from "./img/tick.png";
 import tickbig from "./img/tickbig.png";
 import travel from "./img/travel.png";
 import viber from "./img/viber.png";
-import whatsap from "./img/wahtsap.png";
-import whatsapp from "./img/wahtsapp.png";
+import whatsap from "./img/whatsap.png";
+import whatsapp from "./img/whatsapp.png";
 
 export {
   bio,
