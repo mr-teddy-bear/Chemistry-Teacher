@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Comfortaa";
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style-type: none;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 1024px;
+  width: 100%;
+}
+
+.textTitle {
+  margin: 65px 0px 0px 0px;
+  text-align: center;
+  font-size: 59.8px;
+  color: rgb(21, 21, 21);
+  font-weight: bold;
+  line-height: 1.2;
+}
+.bloks {
+  margin-top: 93px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.blok {
+  /* width: 179.51px;
+  height: 179.51px; */
+  width: 150px;
+  height: 150px;
+  margin: 0 50px 64px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(252, 252, 252);
+  position: relative;
+}
+.blok:hover {
+  box-shadow: 0px 12px 9px 0px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.blokTitle {
+  font-size: 85px;
+  color: rgb(108, 108, 108);
+  font-weight: bold;
+}
+.miniTitle {
+  font-size: 18.38px;
+  color: rgb(108, 108, 108);
+  font-weight: bold;
+  text-align: center;
+}
+.lock {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  fill: #000;
+}
+.successIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  fill: #00ff00;
+}
+.blok.disabled {
+  box-shadow: 0px 12px 9px 0px rgba(0, 0, 0, 0.1);
+  background-color: rgb(206, 206, 206);
+  border: 1px solid #ff0000;
+}
+.blok.waiting {
+  box-shadow: 0px 12px 9px 0px rgba(0, 0, 0, 0.1);
+  background-color: rgb(206, 206, 206);
+  border: 1px solid #ffe600;
+}
+.blok.success {
+  box-shadow: 0px 12px 9px 0px rgba(0, 0, 0, 0.1);
+  background-color: rgb(206, 206, 206);
+  border: 1px solid #00ff00;
+}

@@ -1,0 +1,80 @@
+.questionNumber {
+  margin: 145px 0 33px 0;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+.questionNumberTitle {
+  font-size: 40px;
+  color: rgb(21, 21, 21);
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.questionDescr {
+  font-size: 14px;
+  color: rgba(21, 21, 21, 0.851);
+  font-weight: bold;
+  line-height: 1.714;
+  text-indent: 40px;
+}
+.asnwersInfo {
+  height: 285px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.yourAnswer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.answerTitle {
+  margin-top: 53px;
+  font-size: 30px;
+  color: rgb(21, 21, 21);
+  font-weight: bold;
+  line-height: 1;
+}
+.answser {
+  margin-top: 36px;
+  font-size: 14px;
+  color: rgba(21, 21, 21, 0.851);
+  font-weight: bold;
+  line-height: 1;
+  text-indent: 0px;
+}
+.yourAnswerForm {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+.formInput {
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 6px 6px 0px rgba(0, 0, 1, 0.07);
+  width: 314px;
+  height: 50px;
+  border: none;
+  text-align: center;
+  font-size: 13.655px;
+  color: rgba(21, 21, 21, 0.502);
+  line-height: 1.758;
+  font-style: italic;
+}
+.formInput:focus {
+  outline: none;
+}
+.formBtn {
+  background-color: rgb(255 181 65);
+  width: 50px;
+  height: 50px;
+  border: none;
+  margin-left: -4px;
+  box-shadow: 0px 6px 6px 0px rgba(0, 0, 1, 0.07);
+  cursor: pointer;
+}
+.formBtnImg {
+  height: 19px;
+  width: 25px;
+}

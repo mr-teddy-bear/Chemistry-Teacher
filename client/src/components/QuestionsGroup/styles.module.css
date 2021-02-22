@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Comfortaa";
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style-type: none;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 1024px;
+  width: 100%;
+}
+.questionNumbers {
+  margin-top: 100px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 75px;
+}
+.number {
+  width: 4.5%;
+  height: 45px;
+  background-color: rgb(252, 252, 252);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.number:not(:first-child) {
+  margin: 0px 14.1px 25px 13.79px;
+}
+.number:first-child {
+  margin: 0px 14.1px 25px 0;
+}
+.number:hover {
+  background-color: rgb(252, 252, 252);
+  box-shadow: 0px 6px 6px 0px rgba(0, 0, 1, 0.08);
+  transition: 0.5s all;
+  cursor: pointer;
+}
+.number.active {
+  border: 1px solid #00ff00;
+}
+.number.asked {
+  border: 1px solid #ffb541;
+}
+.numberTitle {
+  font-size: 18.5px;
+  color: rgb(21, 21, 21);
+  line-height: 0.96;
+  text-indent: 0px;
+}

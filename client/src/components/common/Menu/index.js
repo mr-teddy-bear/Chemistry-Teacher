@@ -14,9 +14,9 @@ function Menu() {
           <h3>Logo</h3>
         </div>
         <div className={styles.links}>
-          <a className={styles.link} href="#main">
+          <Link className={styles.link} to="/">
             Главная
-          </a>
+          </Link>
           <a className={styles.link} href="#test">
             Пробный тест
           </a>
