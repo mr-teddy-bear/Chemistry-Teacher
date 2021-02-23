@@ -3,13 +3,10 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { useDispatch } from "react-redux";
 import history from "../../../store/history";
 // import { deletedContact, openDeleteModal } from 'store/contacts/actions';
 
 export default function AlertDialog({ showAlert, closeAlert }) {
-  const dispatch = useDispatch();
-
   return (
     <div>
       <Dialog
