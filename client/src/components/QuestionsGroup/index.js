@@ -13,10 +13,11 @@ function QuestionsGroup() {
   const questions = useSelector((state) => state.subjects.chemistry).filter(
     (chemTest) => chemTest.id === +test
   )[0].questions;
-  const [askedQuestion, setAskQuestion] = useState([1, 2, 3, 4, 5]);
+  const [askedQuestion, setAskQuestion] = useState({});
   const currentQuestion = questions[id - 1];
+
   useEffect(() => {
-    if (askedQuestion.length === questions.length) {
+    if (Object.keys(askedQuestion).length === questions.length) {
       dispatch(changeStatus(+test));
       history.push("/chemistry");
     }
@@ -24,8 +25,22 @@ function QuestionsGroup() {
   return (
     <div className={styles.main}>
       <Menu />
+
       <div className={styles.container}>
-        <Question questionData={currentQuestion} />
+        <Question
+          questionData={currentQuestion}
+          askValue={askedQuestion[currentQuestion.number]}
+          idx={id}
+          addAnswer={(ans) => {
+            setAskQuestion({
+              ...askedQuestion,
+              [currentQuestion.number]: ans,
+            });
+            +id !== questions.length
+              ? history.push(`/chemistryQuestion?test=${test}&&id=${+id + 1}`)
+              : history.push(`/chemistryQuestion?test=${test}&&id=1`);
+          }}
+        />
         <div className={styles.questionNumbers}>
           {questions.map((question) => {
             return (
@@ -38,7 +53,9 @@ function QuestionsGroup() {
                   styles.number,
                   question.number === +id
                     ? styles.active
-                    : askedQuestion.includes(question.number)
+                    : Object.keys(askedQuestion).includes(
+                        question.number.toString()
+                      )
                     ? styles.asked
                     : "",
                 ].join(" ")}

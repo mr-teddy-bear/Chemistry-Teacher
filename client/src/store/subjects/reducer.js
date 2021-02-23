@@ -122,7 +122,7 @@ const initialState = {
       id: 4,
       title: 10,
       subtitle: "класс",
-      status: "disabled",
+      status: "active",
       questions: [
         {
           number: 1,
@@ -255,11 +255,11 @@ function subjectsReducer(state = initialState, { type, payload }) {
     case CHANGE_TEST_STATUS:
       return {
         ...state,
-        chemistry: [
-          ...state.chemistry,
-          (state.chemistry.filter((test) => test.id === payload).status =
-            "waiting"),
-        ],
+        chemistry: state.chemistry.map((item) => {
+          return item.id === payload
+            ? { ...item, status: "waiting" }
+            : { ...item };
+        }),
       };
 
     default:

@@ -1,7 +1,7 @@
 .questionNumber {
   margin: 145px 0 33px 0;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 100%;
 }
 .questionNumberTitle {
@@ -77,4 +77,20 @@
 .formBtnImg {
   height: 19px;
   width: 25px;
+}
+.backBtn {
+  background-color: rgb(252, 198, 15);
+  box-shadow: 0px 9px 9px 0px rgba(0, 0, 0, 0.07);
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: bold;
+  padding: 17px 48px 18px 48px;
+  border: none;
+  position: relative;
+  transition: 0.5s box-shadow;
+}
+.backBtn:hover {
+  cursor: pointer;
+  box-shadow: 0px 9px 9px 0px rgba(0, 0, 0, 0.3);
+  transition: 0.5s all;
 }
