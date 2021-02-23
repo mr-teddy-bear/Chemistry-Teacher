@@ -1,6 +1,8 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
-const DOT_ENV_FILE = process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env.local';
+const DOT_ENV_FILE = process.env.NODE_ENV
+  ? `.env.${process.env.NODE_ENV}`
+  : ".env.local";
 
 dotenv.config({ path: DOT_ENV_FILE });
 
@@ -11,6 +13,6 @@ export default {
     clientUri: process.env.CLIENT_URI,
     mongoUri: process.env.MONGO_URI,
     jwtSecret: process.env.JWT_SECRET,
-    jwtTimeToLive: process.env.TIME_TO_LIVE
-  }
+    jwtTimeToLive: process.env.TIME_TO_LIVE,
+  },
 };
