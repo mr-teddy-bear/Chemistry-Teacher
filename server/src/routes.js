@@ -1,5 +1,7 @@
 import { Router } from "express";
-import authRouter from "./api/auth/index.js";
+import chemAuthRouter from "./api/chemAuth/index.js";
+import bioAuthRouter from "./api/bioAuth/index.js";
+
 //import transRouter from "./api/money/index.js";
 import passport from "./config/passport.js";
 // import { version } from '../package.json';
@@ -16,7 +18,8 @@ router.get("/", (req, res) => {
   });
 });
 
-router.use("/login", authRouter);
+router.use("/chemlogin", chemAuthRouter);
+router.use("/biologin", bioAuthRouter);
 // router.use('/transactions', passport.authenticate('jwt', { session: false }), transRouter)
 
 export default router;

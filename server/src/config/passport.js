@@ -1,6 +1,6 @@
 import passport from "passport";
 import LocalStrategy from "passport-local";
-import User from "../models/User.js";
+import User from "../models/ChemUsers.js";
 import config from "./environment.js";
 import bcrypt from "bcrypt";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
