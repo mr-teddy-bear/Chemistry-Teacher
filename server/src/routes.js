@@ -1,8 +1,8 @@
 import { Router } from "express";
 import chemAuthRouter from "./api/chemAuth/index.js";
 import bioAuthRouter from "./api/bioAuth/index.js";
-
-//import transRouter from "./api/money/index.js";
+import adminRouter from "./api/admin/index.js";
+import chemSubjRouter from "./api/chemSubjects/index.js";
 import passport from "./config/passport.js";
 // import { version } from '../package.json';
 
@@ -18,8 +18,13 @@ router.get("/", (req, res) => {
   });
 });
 
+router.use("/admin", adminRouter);
 router.use("/chemlogin", chemAuthRouter);
+router.use(
+  "/chemistry",
+  passport.authenticate("jwt", { session: false }),
+  chemSubjRouter
+);
 router.use("/biologin", bioAuthRouter);
-// router.use('/transactions', passport.authenticate('jwt', { session: false }), transRouter)
 
 export default router;

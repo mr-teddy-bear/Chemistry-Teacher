@@ -32,29 +32,4 @@ const loginUser = async (email, password) => {
   return resObj;
 };
 
-const regUser = async (email, password, name) => {
-  const candidate = await ChemUsers.findOne({ email });
-  if (candidate) {
-    throw new Error("Пользователь уже существует");
-  }
-  const hashPassword = await bcrypt.hash(password, 12);
-  const classStatus = [
-    { title: "7", subtitle: "класс", status: "active" },
-    { title: "8", subtitle: "класс", status: "disabled" },
-    { title: "9", subtitle: "класс", status: "disabled" },
-    { title: "10", subtitle: "класс", status: "disabled" },
-    { title: "11", subtitle: "класс", status: "disabled" },
-    { title: "ЦТ", subtitle: "", status: "disabled" },
-    { title: "", subtitle: "контрольные работы", status: "disabled" },
-  ];
-  const user = new ChemUsers({
-    email,
-    password: hashPassword,
-    name,
-    classStatus,
-  });
-  await user.save();
-  return user;
-};
-
-export { loginUser, regUser };
+export { loginUser };

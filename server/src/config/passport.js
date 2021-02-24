@@ -36,27 +36,27 @@ passport.use(
   )
 );
 
-// passport.use(
-//     'jwt',
-//     new JwtStrategy(
-//         {
-//             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-//             secretOrKey: jwtSecret,
-//             jsonWebTokenOptions: {
-//                 maxAge: jwtTimeToLive
-//             }
-//         },
-//         async (payload, done) => {
-//             try {
-//                 const { userId } = payload;
-//                 const user = await User.findOne({ _id: userId });
-//                 if (!user) return done(null, false);
-//                 return done(null, user);
-//             } catch (error) {
-//                 done(error, false);
-//             }
-//         }
-//     )
-// );
+passport.use(
+  "jwt",
+  new JwtStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: jwtSecret,
+      jsonWebTokenOptions: {
+        maxAge: jwtTimeToLive,
+      },
+    },
+    async (payload, done) => {
+      try {
+        const { userId } = payload;
+        const user = await User.findOne({ _id: userId });
+        if (!user) return done(null, false);
+        return done(null, user);
+      } catch (error) {
+        done(error, false);
+      }
+    }
+  )
+);
 
 export default passport;
