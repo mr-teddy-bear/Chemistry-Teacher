@@ -1,18 +1,39 @@
 import ChemUsers from "../../models/ChemUsers.js";
 import ChemClasses from "../../models/ChemClasses.js";
+import ChemProgress from "../../models/ChemProgress.js";
+import ChemQuestions from "../../models/ChemQuestions.js";
 
 const getInfoAboutClass = async (userId) => {
-  const user = await ChemUsers.findOne({ _id: userId });
-  const statuses = user.classStatus.map((stats, idx) => {
+  const progresses = await ChemProgress.find({ userId });
+
+  const progress = progresses.map(async (prog, idx) => {
+    const titles = await ChemClasses.findOne({
+      _id: prog.classStatus.class,
+    });
     return {
       id: idx + 1,
-      title: stats.title,
-      subtitle: stats.subtitle,
-      status: stats.status,
+      title: titles.title,
+      subtitle: titles.subtitle,
+      status: prog.classStatus.status,
+      questions: await ChemQuestions.find({ classId: prog.classStatus.class }),
     };
   });
-  console.log(statuses);
-  return statuses;
+
+  return await Promise.all(progress).then((res) => {
+    return res;
+  });
+};
+
+const changeTestStatus = async (userId, title, subtitle, status) => {
+  const chemClass = await ChemClasses.find({ title, subtitle });
+  const chemClassId = chemClass._id;
+
+  await ChemProgress.findOneAndUpdate(
+    { userId, classStatus: { class: chemClassId } },
+    { classStatus: { status, class: chemClassId } }
+  );
+  const classes = await getInfoAboutClass(userId);
+  return classes;
 };
 
 // const getTransaction = async (userId) => {
@@ -50,4 +71,4 @@ const getInfoAboutClass = async (userId) => {
 //   return transaction;
 // };
 
-export { getInfoAboutClass };
+export { getInfoAboutClass, changeTestStatus };

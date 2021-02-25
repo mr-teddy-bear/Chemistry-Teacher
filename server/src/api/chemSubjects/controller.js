@@ -1,16 +1,24 @@
-import { getInfoAboutClass } from "./service.js";
+import { getInfoAboutClass, changeTestStatus } from "./service.js";
 
 const getInfoAboutClassController = async (req, res) => {
   try {
-    //const { userId } = req.query;
     const userId = req.user._id;
     const classInfo = await getInfoAboutClass(userId);
-    res.json({ classInfo });
+    res.json(classInfo);
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
 };
-
+const changeTestStatusController = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { title, subtitle, status } = req.body;
+    const classInfo = await changeTestStatus(userId, title, subtitle, status);
+    res.json(classInfo);
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
 // const getTransactionsController = async (req, res) => {
 //   try {
 //     const userId = req.user._id;
@@ -42,4 +50,4 @@ const getInfoAboutClassController = async (req, res) => {
 //   }
 // };
 
-export { getInfoAboutClassController };
+export { getInfoAboutClassController, changeTestStatusController };
