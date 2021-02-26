@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Menu from "../common/Menu";
 import styles from "./styles.module.css";
 import { ReactComponent as Lock } from "../../assets/img/lock.svg";
 import { ReactComponent as Check } from "../../assets/img/check.svg";
-
-import { useSelector } from "react-redux";
+import { getClassInfo } from "../../store/subjects/actions";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 function HomeWorkChemistry() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getClassInfo());
+  }, [dispatch]);
   const homeworks = useSelector((state) => state.subjects.chemistry);
   return (
     <div className={styles.main}>

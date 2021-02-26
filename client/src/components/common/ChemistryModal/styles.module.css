@@ -45,7 +45,7 @@
   position: relative;
   top: 18px;
 }
-.input {
+.formInput {
   border-width: 0.95px;
   border-color: rgb(255, 181, 65);
   border-style: solid;
@@ -57,6 +57,9 @@
   font-weight: bold;
   color: #909090;
   line-height: 2;
+}
+.formInput.inputError {
+  border-color: #f03226;
 }
 .authBtn {
   background-color: rgb(255, 181, 65);

@@ -1,43 +1,68 @@
 import axios from "axios";
 import {
-  CHANGE_TEST_STATUS,
-  FINISHED_TEST_FAILURE,
-  FINISHED_TEST_REQUEST,
-  FINISHED_TEST_SUCCESS,
+  CHANGE_TEST_STATUS_FAILURE,
+  CHANGE_TEST_STATUS_REQUEST,
+  CHANGE_TEST_STATUS_SUCCESS,
+  GET_CLASS_INFO_FAILURE,
+  GET_CLASS_INFO_REQUEST,
+  GET_CLASS_INFO_SUCCESS,
 } from "../actionTypes";
-import setAuthTokenHeader from "../../services/configure";
 import history from "../history";
 
-export function finishedTestFailure() {
+export function getClassInfoFailure(message) {
   return {
-    type: FINISHED_TEST_FAILURE,
+    type: GET_CLASS_INFO_FAILURE,
+    payload: message,
   };
 }
-export function finishedTestSuccess() {
+export function getClassInfoSuccess(classInfo) {
   return {
-    type: FINISHED_TEST_SUCCESS,
+    type: GET_CLASS_INFO_SUCCESS,
+    payload: classInfo,
   };
 }
-export function finishedTestRequest(test) {
+export function getClassInfoRequest() {
   return {
-    type: FINISHED_TEST_REQUEST,
-    payload: test,
+    type: GET_CLASS_INFO_REQUEST,
   };
 }
-export function changeStatus(testNumber) {
+export function changeStatusRequest() {
   return {
-    type: CHANGE_TEST_STATUS,
-    payload: testNumber,
+    type: CHANGE_TEST_STATUS_REQUEST,
   };
 }
-export const finishedTest = (test) => async (dispatch) => {
-  dispatch(finishedTestRequest());
+export function changeStatusFailure(message) {
+  return {
+    type: CHANGE_TEST_STATUS_FAILURE,
+    payload: message,
+  };
+}
+export function changeStatusSuccess() {
+  return {
+    type: CHANGE_TEST_STATUS_SUCCESS,
+  };
+}
+export const getClassInfo = () => async (dispatch) => {
+  dispatch(getClassInfoRequest());
   try {
-    //const response = await axios.post("http://localhost:3001/login", test);
-    //const { test} = response.data;
-    dispatch(finishedTestSuccess(test));
+    const classInfo = await axios.get("http://localhost:3001/chemistry");
+
+    dispatch(getClassInfoSuccess(classInfo.data));
+  } catch (e) {
+    dispatch(getClassInfoFailure(e.message));
+  }
+};
+export const changeStatus = (title, subtitle, status) => async (dispatch) => {
+  dispatch(changeStatusRequest());
+  try {
+    await axios.post("http://localhost:3001/chemistry", {
+      title,
+      subtitle,
+      status,
+    });
+    dispatch(changeStatusSuccess());
     history.push("/chemistry");
   } catch (e) {
-    dispatch(finishedTestFailure(e.message));
+    dispatch(changeStatusFailure(e.message));
   }
 };

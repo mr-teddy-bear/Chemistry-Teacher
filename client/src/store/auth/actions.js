@@ -6,10 +6,17 @@ import {
   LOG_OUT,
   TOGGLE_BIO_MODAL,
   TOGGLE_CHEM_MODAL,
+  CHANGE_MESSAGE,
 } from "../actionTypes";
 import setAuthTokenHeader from "../../services/configure";
 import history from "../history";
 //import history from "../history";
+export function changeMessage(message) {
+  return {
+    type: CHANGE_MESSAGE,
+    payload: message,
+  };
+}
 export function toggleBioModal() {
   return {
     type: TOGGLE_BIO_MODAL,
@@ -25,10 +32,10 @@ export function loginRequest() {
     type: LOGIN_REQUEST,
   };
 }
-export function loginSuccess(user) {
+export function loginSuccess(name) {
   return {
     type: LOGIN_SUCCESS,
-    payload: user,
+    payload: name,
   };
 }
 export function loginFailure(error) {
@@ -46,15 +53,19 @@ export function logOut() {
   };
 }
 
-export const login = (userData) => async (dispatch) => {
+export const chemLogin = (userData) => async (dispatch) => {
   dispatch(loginRequest());
   try {
-    const response = await axios.post("http://localhost:3001/login", userData);
-    const { token, ...user } = response.data;
+    const response = await axios.post(
+      "http://localhost:3001/chemlogin",
+      userData
+    );
+    const { token, name } = response.data;
     setAuthTokenHeader(token);
     localStorage.setItem("token", token);
-    dispatch(loginSuccess(user));
-    history.push("/home");
+    dispatch(loginSuccess(name));
+    history.push("/chemistry");
+    changeMessage("Добро пожаловать " + name);
   } catch (e) {
     dispatch(loginFailure(e.message));
   }

@@ -5,6 +5,7 @@ import {
   LOG_OUT,
   TOGGLE_CHEM_MODAL,
   TOGGLE_BIO_MODAL,
+  CHANGE_MESSAGE,
 } from "../actionTypes";
 
 const initialState = {
@@ -16,6 +17,11 @@ const initialState = {
 
 function loginReducer(state = initialState, { type, payload }) {
   switch (type) {
+    case CHANGE_MESSAGE:
+      return {
+        ...state,
+        message: payload,
+      };
     case TOGGLE_CHEM_MODAL:
       return {
         ...state,

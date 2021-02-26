@@ -9,19 +9,34 @@ import { changeStatus } from "../../store/subjects/actions";
 
 function QuestionsGroup() {
   const dispatch = useDispatch();
+
   const { test, id } = useSelector((state) => state.router.location.query);
-  const questions = useSelector((state) => state.subjects.chemistry).filter(
+  const classInfo = useSelector((state) => state.subjects.chemistry).filter(
     (chemTest) => chemTest.id === +test
-  )[0].questions;
+  )[0];
+  console.log(classInfo);
+  const questions = classInfo.questions;
   const [askedQuestion, setAskQuestion] = useState({});
   const currentQuestion = questions[id - 1];
 
-  useEffect(() => {
-    if (Object.keys(askedQuestion).length === questions.length) {
-      dispatch(changeStatus(+test));
-      history.push("/chemistry");
-    }
-  });
+  const pushHandler = () => {
+    console.log(Object.keys(askedQuestion).length);
+    console.log(questions.length);
+    Object.keys(askedQuestion).length + 1 === questions.length
+      ? dispatch(changeStatus(classInfo.title, classInfo.subtitle, "waiting"))
+      : +id !== questions.length
+      ? history.push(`/chemistryQuestion?test=${test}&&id=${+id + 1}`)
+      : history.push(`/chemistryQuestion?test=${test}&&id=1`);
+
+    // +id !== questions.length
+    //         ? history.push(`/chemistryQuestion?test=${test}&&id=${+id + 1}`)
+    //         : history.push(`/chemistryQuestion?test=${test}&&id=1`);
+  };
+
+  // if (Object.keys(askedQuestion).length === questions.length) {
+  //   dispatch(changeStatus(classInfo.title, classInfo.subtitle, "waiting"));
+  // }
+
   return (
     <div className={styles.main}>
       <Menu />
@@ -36,9 +51,7 @@ function QuestionsGroup() {
               ...askedQuestion,
               [currentQuestion.number]: ans,
             });
-            +id !== questions.length
-              ? history.push(`/chemistryQuestion?test=${test}&&id=${+id + 1}`)
-              : history.push(`/chemistryQuestion?test=${test}&&id=1`);
+            pushHandler();
           }}
         />
         <div className={styles.questionNumbers}>

@@ -15,7 +15,9 @@ const getInfoAboutClass = async (userId) => {
       title: titles.title,
       subtitle: titles.subtitle,
       status: prog.classStatus.status,
-      questions: await ChemQuestions.find({ classId: prog.classStatus.class }),
+      questions: await ChemQuestions.find({
+        classId: prog.classStatus.class,
+      }).sort({ number: "asc" }),
     };
   });
 
