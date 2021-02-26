@@ -25,12 +25,15 @@ const getInfoAboutClass = async (userId) => {
 };
 
 const changeTestStatus = async (userId, title, subtitle, status) => {
-  const chemClass = await ChemClasses.find({ title, subtitle });
+  const chemClass = await ChemClasses.findOne({ title, subtitle });
   const chemClassId = chemClass._id;
 
   await ChemProgress.findOneAndUpdate(
-    { userId, classStatus: { class: chemClassId } },
-    { classStatus: { status, class: chemClassId } }
+    {
+      userId,
+      "classStatus.class": chemClassId,
+    },
+    { "classStatus.status": status }
   );
   const classes = await getInfoAboutClass(userId);
   return classes;
