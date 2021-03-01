@@ -17,6 +17,11 @@ import travel from "./img/travel.png";
 import viber from "./img/viber.png";
 import whatsap from "./img/whatsap.png";
 import whatsapp from "./img/whatsapp.png";
+import admin from "./img/admin.PNG";
+import adminstudents from "./img/adminstudents.jpg";
+import razdels from "./img/razdels.jpg";
+import progress from "./img/progress.png";
+import questions from "./img/questions.png";
 
 export {
   bio,
@@ -37,5 +42,10 @@ export {
   travel,
   viber,
   whatsap,
+  admin,
   whatsapp,
+  adminstudents,
+  razdels,
+  progress,
+  questions,
 };

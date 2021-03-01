@@ -19,7 +19,17 @@ const regUser = async (email, password, name) => {
   await user.save();
   return user;
 };
-
+const getUser = async () => {
+  const users = await ChemUsers.find();
+  const filtredUsers = users.map((user, idx) => {
+    return {
+      id: idx + 1,
+      name: user.name,
+      email: user.email,
+    };
+  });
+  return filtredUsers;
+};
 const addClass = async (title, subtitle) => {
   const candidate = await ChemClasses.findOne({ title, subtitle });
   if (candidate) {
@@ -95,4 +105,4 @@ const addQuestion = async (number, descr, classId, answers) => {
 //   return transaction;
 // };
 
-export { regUser, addClass, addUserInClass, addQuestion };
+export { regUser, addClass, addUserInClass, addQuestion, getUser };

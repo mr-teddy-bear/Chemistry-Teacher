@@ -1,4 +1,10 @@
-import { addClass, regUser, addUserInClass, addQuestion } from "./service.js";
+import {
+  addClass,
+  regUser,
+  addUserInClass,
+  addQuestion,
+  getUser,
+} from "./service.js";
 
 const regUserController = async (req, res) => {
   try {
@@ -7,6 +13,15 @@ const regUserController = async (req, res) => {
     res.status(201).json({
       message: `Создан пользователь ${name} email: ${email} и паролем ${newUser.password}`,
     });
+  } catch (e) {
+    res.status(400).json({ message: e.message || "Bad request" });
+  }
+};
+
+const getUserController = async (req, res) => {
+  try {
+    const users = await getUser();
+    res.status(201).json(users);
   } catch (e) {
     res.status(400).json({ message: e.message || "Bad request" });
   }
@@ -44,6 +59,7 @@ const addQuestionController = async (req, res) => {
     res.status(400).json({ message: e.message || "Bad request" });
   }
 };
+
 // const getTransactionsController = async (req, res) => {
 //   try {
 //     const userId = req.user._id;
@@ -80,4 +96,5 @@ export {
   regUserController,
   addUserInClassController,
   addQuestionController,
+  getUserController,
 };

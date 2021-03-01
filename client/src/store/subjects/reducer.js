@@ -5,6 +5,7 @@ import {
   GET_CLASS_INFO_FAILURE,
   GET_CLASS_INFO_REQUEST,
   GET_CLASS_INFO_SUCCESS,
+  CHANGE_MESSAGE,
 } from "../actionTypes";
 
 const initialState = {
@@ -17,6 +18,11 @@ const initialState = {
 
 function subjectsReducer(state = initialState, { type, payload }) {
   switch (type) {
+    case CHANGE_MESSAGE:
+      return {
+        ...state,
+        message: payload,
+      };
     case GET_CLASS_INFO_REQUEST:
       return {
         ...state,
@@ -51,6 +57,8 @@ function subjectsReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         isRequesting: false,
+        chemistry: [...payload],
+        message: "Теперь можно отдохнуть:)",
       };
     // case CHANGE_TEST_STATUS:
     //   return {

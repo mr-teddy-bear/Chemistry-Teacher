@@ -3,18 +3,28 @@ import Menu from "../common/Menu";
 import styles from "./styles.module.css";
 import { ReactComponent as Lock } from "../../assets/img/lock.svg";
 import { ReactComponent as Check } from "../../assets/img/check.svg";
-import { getClassInfo } from "../../store/subjects/actions";
+import { getClassInfo, changeMessage } from "../../store/subjects/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import SnackBar from "../common/SnackBar";
 
 function HomeWorkChemistry() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getClassInfo());
   }, [dispatch]);
+  const isRequesting = useSelector((state) => state.subjects.isRequesting);
   const homeworks = useSelector((state) => state.subjects.chemistry);
+  const dialogMessage = useSelector((state) => state.subjects.message);
+
   return (
     <div className={styles.main}>
+      {isRequesting && (
+        <div className={styles.preload}>
+          <CircularProgress />
+        </div>
+      )}
       <Menu />
       <div className={styles.container}>
         <div className={styles.text}>
@@ -60,6 +70,10 @@ function HomeWorkChemistry() {
           })}
         </div>
       </div>
+      <SnackBar
+        dialogMessage={dialogMessage}
+        closeHandler={() => dispatch(changeMessage(""))}
+      />
     </div>
   );
 }

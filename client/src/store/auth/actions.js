@@ -63,9 +63,9 @@ export const chemLogin = (userData) => async (dispatch) => {
     const { token, name } = response.data;
     setAuthTokenHeader(token);
     localStorage.setItem("token", token);
+    changeMessage("Добро пожаловать ");
     dispatch(loginSuccess(name));
     history.push("/chemistry");
-    changeMessage("Добро пожаловать " + name);
   } catch (e) {
     dispatch(loginFailure(e.message));
   }

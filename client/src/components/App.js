@@ -3,6 +3,11 @@ import { Switch, Route } from "react-router-dom";
 import Home from "./Home";
 import HomeWorkChemistry from "./HomeWorkChemistry";
 import QuestionsGroup from "./QuestionsGroup";
+import Admin from "./Admin";
+import AdminStudents from "./AdminStudents";
+import AdminClasses from "./AdminClasses";
+import AdminQuestions from "./AdminQuestions";
+import AdminProgress from "./AdminProgress";
 
 function App() {
   return (
@@ -10,6 +15,11 @@ function App() {
       <Route exact path="/" component={Home} />
       <Route exact path="/chemistry" component={HomeWorkChemistry} />
       <Route path="/chemistryQuestion" component={QuestionsGroup} />
+      <Route exact path="/admin" component={Admin} />
+      <Route exact path="/admin/students" component={AdminStudents} />
+      <Route exact path="/admin/classes" component={AdminClasses} />
+      <Route exact path="/admin/questions" component={AdminQuestions} />
+      <Route exact path="/admin/progress" component={AdminProgress} />
     </Switch>
   );
 }

@@ -4,11 +4,14 @@ import { chel, whatsap, telega, viber } from "../../../assets/";
 import styles from "./styles.module.css";
 import { Formik } from "formik";
 import validationSchema from "./validationLoginSchema";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { chemLogin, toggleChemModal } from "../../../store/auth/actions";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function ChemistryModal() {
   const dispatch = useDispatch();
+  const isRequesting = useSelector((state) => state.auth.isRequesting);
+
   const clickHandler = (e) => {
     if (e.target.className === styles.modal) {
       dispatch(toggleChemModal());
@@ -16,6 +19,11 @@ function ChemistryModal() {
   };
   return (
     <div className={styles.modal} onClick={clickHandler}>
+      {isRequesting && (
+        <div className={styles.preload}>
+          <CircularProgress />
+        </div>
+      )}
       <div className={styles.container}>
         <Close
           onClick={() => dispatch(toggleChemModal())}

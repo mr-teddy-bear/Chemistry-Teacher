@@ -1,0 +1,15 @@
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 20px;
+  height: 100%;
+}
+.avatar:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  transition: 0.5s all;
+}
+.name {
+  margin-left: 10px;
+}

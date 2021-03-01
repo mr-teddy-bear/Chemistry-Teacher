@@ -6,9 +6,11 @@ import history from "../../store/history";
 import Question from "../Question";
 import styles from "./styles.module.css";
 import { changeStatus } from "../../store/subjects/actions";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function QuestionsGroup() {
   const dispatch = useDispatch();
+  const isRequesting = useSelector((state) => state.subjects.isRequesting);
 
   const { test, id } = useSelector((state) => state.router.location.query);
   const classInfo = useSelector((state) => state.subjects.chemistry).filter(
@@ -18,12 +20,16 @@ function QuestionsGroup() {
   const questions = classInfo.questions;
   const [askedQuestion, setAskQuestion] = useState({});
   const currentQuestion = questions[id - 1];
+  const changeStatusHandler = () => {
+    dispatch(changeStatus(classInfo.title, classInfo.subtitle, "waiting"));
+    history.push("/chemistry");
+  };
 
   const pushHandler = () => {
     console.log(Object.keys(askedQuestion).length);
     console.log(questions.length);
     Object.keys(askedQuestion).length + 1 === questions.length
-      ? dispatch(changeStatus(classInfo.title, classInfo.subtitle, "waiting"))
+      ? changeStatusHandler()
       : +id !== questions.length
       ? history.push(`/chemistryQuestion?test=${test}&&id=${+id + 1}`)
       : history.push(`/chemistryQuestion?test=${test}&&id=1`);
@@ -42,6 +48,11 @@ function QuestionsGroup() {
       <Menu />
 
       <div className={styles.container}>
+        {isRequesting && (
+          <div className={styles.preload}>
+            <CircularProgress />
+          </div>
+        )}
         <Question
           questionData={currentQuestion}
           askValue={askedQuestion[currentQuestion.number]}

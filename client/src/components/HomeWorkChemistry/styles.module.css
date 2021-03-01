@@ -39,6 +39,7 @@ li {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  position: relative;
 }
 
 .blok {
@@ -99,4 +100,30 @@ li {
   box-shadow: 0px 12px 9px 0px rgba(0, 0, 0, 0.1);
   background-color: rgb(206, 206, 206);
   border: 1px solid #00ff00;
+}
+/* .preload {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f4f4;
+  z-index: 10;
+  width: 100%;
+} */
+
+.preload {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
 }

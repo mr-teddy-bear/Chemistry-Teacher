@@ -45,6 +45,8 @@ function loginReducer(state = initialState, { type, payload }) {
         user: { username: payload.user },
         isAuth: true,
         isRequesting: false,
+        isChemModal: false,
+        isBioModal: false,
       };
     case LOGIN_REQUEST:
       return {

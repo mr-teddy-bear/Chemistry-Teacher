@@ -6,12 +6,18 @@ import styles from "./styles.module.css";
 import Footer from "../common/Footer";
 import ChemistryModal from "../common/ChemistryModal";
 import BiologyModal from "../common/BiologyModal";
-import { toggleBioModal, toggleChemModal } from "../../store/auth/actions";
+import SnackBar from "../common/SnackBar";
+import {
+  toggleBioModal,
+  toggleChemModal,
+  changeMessage,
+} from "../../store/auth/actions";
 
 function Home() {
   const dispatch = useDispatch();
   const chemModalOpen = useSelector((state) => state.auth.isChemModal);
   const bioModalOpen = useSelector((state) => state.auth.isBioModal);
+  const dialogMessage = useSelector((state) => state.auth.message);
 
   return (
     <div className={styles.main}>
@@ -165,6 +171,10 @@ function Home() {
         </div>
       </div>
       <Footer />
+      <SnackBar
+        dialogMessage={dialogMessage}
+        closeHandler={() => dispatch(changeMessage(""))}
+      />
     </div>
   );
 }
