@@ -1,10 +1,13 @@
 import { Router } from "express";
 import {
-  addClassController,
+  addTestController,
   regUserController,
-  addUserInClassController,
+  addUserInTestController,
   addQuestionController,
-  getUserController,
+  getUsersController,
+  addRazdelController,
+  changeRazdelStatusController,
+  changeTestStatusController,
 } from "./controller.js";
 //import validation from '../../midleware/validation';
 //import regSchema from '../../midleware/validationLoginSchema';
@@ -12,11 +15,14 @@ import {
 const router = Router();
 
 // /admin
-router.post("/regUser", regUserController);
-router.get("/getUser", getUserController);
-router.post("/addClass", addClassController);
-router.post("/addUserInClass", addUserInClassController);
+router.post("/addRazdel", addRazdelController);
+router.post("/addTest", addTestController);
 router.post("/addQuestion", addQuestionController);
+router.post("/regUser", regUserController);
+router.post("/addUserInTest", addUserInTestController);
+router.get("/getUsers", getUsersController);
+router.post("/changeRazdelStatus", changeRazdelStatusController);
+router.post("/changeTestStatus", changeTestStatusController);
 
 // router.get('/', getTransactionsController)
 // router.post('/', addTransactionController);

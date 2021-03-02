@@ -4,8 +4,8 @@ const { Schema, model, Types } = pkg;
 
 const schema = new Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "ChemUsers" },
-  classStatus: {
-    class: { type: mongoose.Schema.Types.ObjectId, ref: "ChemClasses" },
+  testStatus: {
+    test: { type: mongoose.Schema.Types.ObjectId, ref: "ChemThemes" },
     status: { type: String, default: "disabled" },
   },
 });

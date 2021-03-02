@@ -1,8 +1,56 @@
 import ChemUsers from "../../models/ChemUsers.js";
-import ChemClasses from "../../models/ChemClasses.js";
+import ChemThemes from "../../models/ChemThemes.js";
 import ChemQuestions from "../../models/ChemQuestions.js";
 import ChemProgress from "../../models/ChemProgress.js";
+import ChemRazdels from "../../models/ChemRazdels.js";
 import bcrypt from "bcrypt";
+
+const addRazdel = async (title, subtitle) => {
+  const candidate = await ChemRazdels.findOne({ title, subtitle });
+  if (candidate) {
+    throw new Error("Такой раздел уже создан");
+  }
+
+  const newRazdel = new ChemRazdels({
+    title,
+    subtitle,
+  });
+  await newRazdel.save();
+  return newRazdel;
+};
+
+const addTest = async (title, number, razdelTitle, razdelSubtitle) => {
+  const candidate = await ChemThemes.findOne({ title, number });
+  if (candidate) {
+    throw new Error("Такая тема уже создана");
+  }
+
+  const razdel = await ChemRazdels.findOne({
+    title: razdelTitle,
+    subtitle: razdelSubtitle,
+  });
+  if (!razdel) {
+    throw new Error("Невозможно добавить тему в несуществующий класс");
+  }
+  const newTest = new ChemThemes({
+    title,
+    number,
+    razdelId: razdel._id,
+  });
+  await newTest.save();
+  return newTest;
+};
+
+const addQuestion = async (number, descr, testId, answer) => {
+  const newQuestion = new ChemQuestions({
+    number,
+    descr,
+    testId,
+    answer,
+  });
+  await newQuestion.save();
+  return newQuestion;
+};
 
 const regUser = async (email, password, name) => {
   const candidate = await ChemUsers.findOne({ email });
@@ -17,92 +65,86 @@ const regUser = async (email, password, name) => {
     name,
   });
   await user.save();
+  await ChemRazdels.updateMany(
+    {},
+    { $push: { userInfo: { userId: user._id } } }
+  );
+
+  const test = await ChemThemes.find();
+
+  test.map(async (test) => {
+    let progress = new ChemProgress({
+      userId: user._id,
+      testStatus: {
+        test: test._id,
+        status: "disabled",
+      },
+    });
+    await progress.save();
+  });
+
   return user;
 };
-const getUser = async () => {
+
+const addUserInTest = async (email, testId) => {
+  const user = await ChemUsers.findOne({ email });
+  const newUserProgress = await new ChemProgress({
+    userId: user._id,
+    testStatus: {
+      test: testId,
+      status: "disabled",
+    },
+  });
+  await newUserProgress.save();
+  return newUserProgress;
+};
+
+const getUsers = async () => {
   const users = await ChemUsers.find();
   const filtredUsers = users.map((user, idx) => {
     return {
-      id: idx + 1,
+      number: idx + 1,
+      id: user._id,
       name: user.name,
       email: user.email,
     };
   });
   return filtredUsers;
 };
-const addClass = async (title, subtitle) => {
-  const candidate = await ChemClasses.findOne({ title, subtitle });
-  if (candidate) {
-    throw new Error("Такой раздел уже создан");
-  }
 
-  const newClass = new ChemClasses({
-    title,
-    subtitle,
-  });
-  await newClass.save();
-  return newClass;
-};
-
-const addUserInClass = async (email, classId) => {
-  const user = await ChemUsers.findOne({ email });
-  const clas = await ChemClasses.findOneAndUpdate(
-    { _id: classId },
-    { $push: { userId: user._id } }
+const changeRazdelStatus = async (userId, title, subtitle, status) => {
+  const chemRazdel = await ChemRazdels.findOneAndUpdate(
+    { title, subtitle, "userInfo.userId": userId },
+    {
+      $set: {
+        "userInfo.$.status": status,
+      },
+    }
   );
-  const newUserProgress = await new ChemProgress({
-    userId: user._id,
-    classStatus: {
-      class: classId,
-      status: "disabled",
+  return chemRazdel;
+};
+
+const changeTestStatus = async (userId, title, status) => {
+  const chemTest = await ChemThemes.findOne({ title });
+  const chemTestId = chemTest._id;
+
+  const progress = await ChemProgress.findOneAndUpdate(
+    {
+      userId,
+      "testStatus.test": chemTestId,
     },
-  });
-  await newUserProgress.save();
-  return clas;
+    { "testStatus.status": status }
+  );
+  return progress;
 };
-const addQuestion = async (number, descr, classId, answers) => {
-  const newQuestion = new ChemQuestions({
-    number,
-    descr,
-    classId,
-    answers,
-  });
-  await newQuestion.save();
-  return newQuestion;
+
+export {
+  addRazdel,
+  regUser,
+  addTest,
+  addUserInTest,
+  addQuestion,
+  getUsers,
+  changeRazdelStatus,
+  changeTestStatus,
 };
-// const getTransaction = async (userId) => {
-//   const allTransactions = await Transactions.find({ userId });
-//   const transactions = allTransactions.map((transaction) => {
-//     return {
-//       id: transaction._id,
-//       title: transaction.title,
-//       sumOperation: parseInt(transaction.sumOperation),
-//       type: transaction.type,
-//       date: transaction.date,
-//     };
-//   });
-//   return transactions;
-// };
-
-// const addTransaction = async (title, type, sumOperation, userId) => {
-//   const finalTransaction = await Transactions.findOne({ userId }).sort({
-//     _id: -1,
-//   });
-
-//   const finalMoney = !finalTransaction
-//     ? 0
-//     : parseInt(finalTransaction.currentMoney);
-//   const currentMoney = finalMoney + sumOperation;
-//   const transaction = await Transactions.create({
-//     title,
-//     currentMoney,
-//     type,
-//     sumOperation,
-//     userId,
-//   });
-//   await transaction.save();
-
-//   return transaction;
-// };
-
-export { regUser, addClass, addUserInClass, addQuestion, getUser };

@@ -1,57 +1,38 @@
 import {
-  addClass,
+  addTest,
   regUser,
-  addUserInClass,
+  addUserInTest,
   addQuestion,
-  getUser,
+  getUsers,
+  addRazdel,
+  changeRazdelStatus,
+  changeTestStatus,
 } from "./service.js";
 
-const regUserController = async (req, res) => {
-  try {
-    const { email, password, name } = req.body;
-    const newUser = await regUser(email, password, name);
-    res.status(201).json({
-      message: `Создан пользователь ${name} email: ${email} и паролем ${newUser.password}`,
-    });
-  } catch (e) {
-    res.status(400).json({ message: e.message || "Bad request" });
-  }
-};
-
-const getUserController = async (req, res) => {
-  try {
-    const users = await getUser();
-    res.status(201).json(users);
-  } catch (e) {
-    res.status(400).json({ message: e.message || "Bad request" });
-  }
-};
-
-const addClassController = async (req, res) => {
+const addRazdelController = async (req, res) => {
   try {
     const { title, subtitle } = req.body;
-    const classes = await addClass(title, subtitle);
-    res.json({ classes });
+    const razdel = await addRazdel(title, subtitle);
+    res.json({ razdel });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
 };
 
-const addUserInClassController = async (req, res) => {
+const addTestController = async (req, res) => {
   try {
-    const { email, classId } = req.body;
-    const clas = await addUserInClass(email, classId);
-    res.status(201).json({
-      message: `Пользователь ${email} добавлен в класс ${clas.title}`,
-    });
+    const { title, number, razdelTitle, razdelSubtitle } = req.body;
+    const test = await addTest(title, number, razdelTitle, razdelSubtitle);
+    res.json({ test });
   } catch (e) {
-    res.status(400).json({ message: e.message || "Bad request" });
+    res.status(500).json({ message: e.message });
   }
 };
+
 const addQuestionController = async (req, res) => {
   try {
-    const { number, descr, classId, answers } = req.body;
-    const question = await addQuestion(number, descr, classId, answers);
+    const { number, descr, testId, answer } = req.body;
+    const question = await addQuestion(number, descr, testId, answer);
     res.status(201).json({
       message: `Создан новый вопрос ${question}`,
     });
@@ -60,41 +41,60 @@ const addQuestionController = async (req, res) => {
   }
 };
 
-// const getTransactionsController = async (req, res) => {
-//   try {
-//     const userId = req.user._id;
-//     const allTransactions = await getTransaction(userId);
-//     res.json({
-//       message: `Количество транзакций: ${allTransactions.length}`,
-//       allTransactions,
-//     });
-//   } catch (e) {
-//     res.status(500).json({ message: e.message });
-//   }
-// };
+const regUserController = async (req, res) => {
+  try {
+    const { email, password, name } = req.body;
+    const newUser = await regUser(email, password, name);
+    res.status(201).json({ newUser });
+  } catch (e) {
+    res.status(400).json({ message: e.message || "Bad request" });
+  }
+};
+const addUserInTestController = async (req, res) => {
+  try {
+    const { email, testId } = req.body;
+    const progress = await addUserInTest(email, testId);
+    res.status(201).json({ progress });
+  } catch (e) {
+    res.status(400).json({ message: e.message || "Bad request" });
+  }
+};
+const getUsersController = async (req, res) => {
+  try {
+    const users = await getUsers();
+    res.status(201).json(users);
+  } catch (e) {
+    res.status(400).json({ message: e.message || "Bad request" });
+  }
+};
 
-// const addTransactionController = async (req, res) => {
-//   try {
-//     const { title, type, sumOperation } = req.body;
-//     const userId = req.user._id;
-//     const newTransaction = await addTransaction(
-//       title,
-//       type,
-//       sumOperation,
-//       userId
-//     );
-//     res.json({
-//       message: `Произведена транзакция ${title},  currentMoney: ${newTransaction.currentMoney}`,
-//     });
-//   } catch (e) {
-//     res.status(400).json({ message: e.message || "Bad request..." });
-//   }
-// };
+const changeRazdelStatusController = async (req, res) => {
+  try {
+    const { userId, title, subtitle, status } = req.body;
+    const razdel = await changeRazdelStatus(userId, title, subtitle, status);
+    res.json(razdel);
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+const changeTestStatusController = async (req, res) => {
+  try {
+    const { userId, title, status } = req.body;
+    const progress = await changeTestStatus(userId, title, status);
+    res.json({ progress });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
 
 export {
-  addClassController,
+  addTestController,
   regUserController,
-  addUserInClassController,
+  addUserInTestController,
   addQuestionController,
-  getUserController,
+  getUsersController,
+  addRazdelController,
+  changeRazdelStatusController,
+  changeTestStatusController,
 };

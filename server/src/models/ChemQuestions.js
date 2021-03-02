@@ -5,8 +5,8 @@ const { Schema, model, Types } = pkg;
 const schema = new Schema({
   number: { type: Number, required: true },
   descr: { type: String, required: true },
-  classId: { type: mongoose.Schema.Types.ObjectId, ref: "ChemClasses" },
-  answers: { type: Array, required: true },
+  testId: { type: mongoose.Schema.Types.ObjectId, ref: "ChemThemes" },
+  answer: { type: String, required: true },
 });
 
 const ChemQuestions = mongoose.model("chemquestions", schema);

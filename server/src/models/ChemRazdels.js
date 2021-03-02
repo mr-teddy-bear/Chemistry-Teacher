@@ -5,14 +5,14 @@ const { Schema, model, Types } = pkg;
 const schema = new Schema({
   title: { type: String, required: true },
   subtitle: { type: String, required: true },
-  userId: [
+  userInfo: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "ChemUsers",
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: "ChemUsers" },
+      status: { type: String, default: "disabled" },
     },
   ],
 });
 
-const ChemClasses = mongoose.model("chemclasses", schema);
+const ChemRazdels = mongoose.model("chemrazdels", schema);
 
-export default ChemClasses;
+export default ChemRazdels;

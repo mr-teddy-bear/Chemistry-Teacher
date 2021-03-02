@@ -1,33 +1,57 @@
 import ChemUsers from "../../models/ChemUsers.js";
-import ChemClasses from "../../models/ChemClasses.js";
+import ChemThemes from "../../models/ChemThemes.js";
 import ChemProgress from "../../models/ChemProgress.js";
+import ChemRazdels from "../../models/ChemRazdels.js";
 import ChemQuestions from "../../models/ChemQuestions.js";
 
 const getInfoAboutClass = async (userId) => {
-  const progresses = await ChemProgress.find({ userId });
+  const razdels = await ChemRazdels.find({ "userInfo.userId": userId });
 
-  const progress = progresses.map(async (prog, idx) => {
-    const titles = await ChemClasses.findOne({
-      _id: prog.classStatus.class,
-    });
+  const allRazdels = razdels.map(async (razdel, idx) => {
+    const status = await ChemRazdels.findOne(
+      { _id: razdel._id, "userInfo.userId": userId },
+      { _id: 0, userInfo: { $elemMatch: { userId } } }
+    );
+    // console.log(status.userInfo[0].status);
     return {
-      id: idx + 1,
-      title: titles.title,
-      subtitle: titles.subtitle,
-      status: prog.classStatus.status,
-      questions: await ChemQuestions.find({
-        classId: prog.classStatus.class,
-      }).sort({ number: "asc" }),
+      id: razdel._id,
+      number: idx + 1,
+      title: razdel.title,
+      subtitle: razdel.subtitle,
+      status: status.userInfo[0].status,
     };
   });
 
-  return await Promise.all(progress).then((res) => {
+  return await Promise.all(allRazdels).then((res) => {
     return res;
   });
 };
 
+// const getInfoAboutClass = async (userId) => {
+//   const progresses = await ChemProgress.find({ userId });
+
+//   const progress = progresses.map(async (prog, idx) => {
+//     const titles = await ChemThemes.findOne({
+//       _id: prog.classStatus.class,
+//     });
+//     return {
+//       id: idx + 1,
+//       title: titles.title,
+//       subtitle: titles.subtitle,
+//       status: prog.classStatus.status,
+//       questions: await ChemQuestions.find({
+//         classId: prog.classStatus.class,
+//       }).sort({ number: "asc" }),
+//     };
+//   });
+
+//   return await Promise.all(progress).then((res) => {
+//     return res;
+//   });
+// };
+
 const changeTestStatus = async (userId, title, subtitle, status) => {
-  const chemClass = await ChemClasses.findOne({ title, subtitle });
+  const chemClass = await ChemThemes.findOne({ title, subtitle });
   const chemClassId = chemClass._id;
 
   await ChemProgress.findOneAndUpdate(
