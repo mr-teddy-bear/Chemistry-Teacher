@@ -1,29 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AdminMenu from "../common/AdminMenu";
 import Button from "@material-ui/core/Button";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import validationSchema from "./validationLoginSchema";
 import CloseIcon from "@material-ui/icons/Close";
 import styles from "./styles.module.css";
 import {
   getClassInfo,
-  addRazdel,
-  deleteRazdel,
+  getTest,
+  addTest,
   changeMessage,
+  deleteTest,
 } from "../../store/admin/actions";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SnackBar from "../common/SnackBar";
 
-function AdminClasses() {
+function AdminTests() {
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(getTest());
     dispatch(getClassInfo());
   }, [dispatch]);
   const isRequesting = useSelector((state) => state.admin.isRequesting);
   const dialogMessage = useSelector((state) => state.admin.message);
 
+  const tests = useSelector((state) => state.admin.tests);
   const razdels = useSelector((state) => state.admin.razdels);
+
+  const [selectTestId, setSelectTestId] = useState("");
+  let filtredTests = [];
+  selectTestId
+    ? (filtredTests = tests.filter((test) => test.razdelId === selectTestId))
+    : (filtredTests = [...tests]);
+
   return (
     <div className={styles.main}>
       {isRequesting && (
@@ -31,29 +41,48 @@ function AdminClasses() {
           <CircularProgress />
         </div>
       )}
-      <AdminMenu text="Разделы" />
+      <AdminMenu text="Тесты" />
       <div className={styles.mainContainer}>
         <div className={styles.infoBlock}>
-          <h2>Разделы</h2>
+          <div className={styles.infoBlockHeader}>
+            <h2>Тесты</h2>
+            <select
+              onChange={(e) => setSelectTestId(e.target.value)}
+              className={styles.filtredSelect}
+              name=""
+              id=""
+            >
+              <option selected value="">
+                Все тесты
+              </option>
+              {razdels.map((razdel) => {
+                return (
+                  <option value={razdel.id}>
+                    {razdel.title} {razdel.subtitle}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
           <table className={styles.razdelTable}>
             <thead>
               <tr>
                 <td>№</td>
                 <td>Название</td>
+                <td>Раздел</td>
                 <td>Удалить</td>
               </tr>
             </thead>
             <tbody>
-              {razdels.map((razdel) => {
+              {filtredTests.map((test) => {
                 return (
-                  <tr key={razdel.id}>
-                    <td>{razdel.number}</td>
-                    <td>
-                      {razdel.title} {razdel.subtitle}
-                    </td>
+                  <tr key={test.id}>
+                    <td>{test.number}</td>
+                    <td>{test.title}</td>
+                    <td>{test.razdelTitle}</td>
                     <td>
                       <Button
-                        onClick={() => dispatch(deleteRazdel(razdel.id))}
+                        onClick={() => dispatch(deleteTest(test.id))}
                         color="secondary"
                       >
                         <CloseIcon />
@@ -66,12 +95,12 @@ function AdminClasses() {
           </table>
         </div>
         <div className={styles.addBlock}>
-          <h2>Добавить раздел</h2>
+          <h2>Добавить тест</h2>
           <Formik
-            initialValues={{ title: "", subtitle: "" }}
+            initialValues={{ number: "", question: "", razdel: "" }}
             validationSchema={validationSchema}
             onSubmit={(values, { resetForm }) => {
-              dispatch(addRazdel(values));
+              dispatch(addTest(values));
               resetForm({ values: "" });
             }}
           >
@@ -93,29 +122,48 @@ function AdminClasses() {
                 <input
                   className={[
                     styles.formInput,
-                    errors.title && touched.title ? styles.inputError : "",
+                    errors.number && touched.number ? styles.inputError : "",
                   ].join(" ")}
                   type="text"
-                  name="title"
+                  name="number"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.title}
-                  placeholder="title"
+                  value={values.number}
+                  placeholder="Номер"
                 />
                 <input
                   className={[
                     styles.formInput,
-                    errors.subtitle && touched.subtitle
+                    errors.question && touched.question
                       ? styles.inputError
                       : "",
                   ].join(" ")}
                   type="text"
-                  name="subtitle"
+                  name="question"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.subtitle}
-                  placeholder="subtitle"
+                  value={values.question}
+                  placeholder="Вопрос"
                 />
+                <Field
+                  className={[
+                    styles.selectField,
+                    errors.razdel && touched.razdel ? styles.selectError : "",
+                  ].join(" ")}
+                  as="select"
+                  name="razdel"
+                >
+                  <option disabled selected value="">
+                    Выберите раздел
+                  </option>
+                  {razdels.map((razdel) => {
+                    return (
+                      <option value={razdel.id}>
+                        {razdel.title} {razdel.subtitle}
+                      </option>
+                    );
+                  })}
+                </Field>
 
                 <Button
                   type="submit"
@@ -138,4 +186,4 @@ function AdminClasses() {
   );
 }
 
-export default AdminClasses;
+export default AdminTests;

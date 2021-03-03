@@ -13,6 +13,8 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import TurnedInNotIcon from "@material-ui/icons/TurnedInNot";
 import AutorenewIcon from "@material-ui/icons/Autorenew";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
+import FiberNewIcon from "@material-ui/icons/FiberNew";
 import MenuIcon from "@material-ui/icons/Menu";
 import styles from "./styles.module.css";
 import AdminAvatar from "../AdminAvatar";
@@ -67,20 +69,21 @@ export default function SwipeableTemporaryDrawer() {
             <ListItemText primary="Главная" />
           </ListItem>
         </Link>
-        <Link to="/admin/students">
-          <ListItem button>
-            <ListItemIcon>
-              <PermIdentityIcon />
-            </ListItemIcon>
-            <ListItemText primary="Ученики" />
-          </ListItem>
-        </Link>
-        <Link to="/admin/classes">
+
+        <Link to="/admin/razdels">
           <ListItem button>
             <ListItemIcon>
               <HelpOutlineIcon />
             </ListItemIcon>
             <ListItemText primary="Разделы" />
+          </ListItem>
+        </Link>
+        <Link to="/admin/test">
+          <ListItem button>
+            <ListItemIcon>
+              <QuestionAnswerIcon />
+            </ListItemIcon>
+            <ListItemText primary="Тесты" />
           </ListItem>
         </Link>
         <Link to="/admin/questions">
@@ -91,12 +94,28 @@ export default function SwipeableTemporaryDrawer() {
             <ListItemText primary="Вопросы" />
           </ListItem>
         </Link>
+        <Link to="/admin/students">
+          <ListItem button>
+            <ListItemIcon>
+              <PermIdentityIcon />
+            </ListItemIcon>
+            <ListItemText primary="Ученики" />
+          </ListItem>
+        </Link>
         <Link to="/admin/progress">
           <ListItem button>
             <ListItemIcon>
               <AutorenewIcon />
             </ListItemIcon>
             <ListItemText primary="Прогресс" />
+          </ListItem>
+        </Link>
+        <Link to="/admin/new">
+          <ListItem button>
+            <ListItemIcon>
+              <FiberNewIcon />
+            </ListItemIcon>
+            <ListItemText primary="Результаты" />
           </ListItem>
         </Link>
       </List>

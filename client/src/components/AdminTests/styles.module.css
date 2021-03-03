@@ -14,8 +14,8 @@ li {
   background: #fcfcfe;
 }
 .mainContainer {
-  min-height: 100vh;
   max-width: 1380px;
+  min-height: 100vh;
   margin: 50px auto 0 auto;
   padding: 50px 0;
   display: flex;
@@ -34,11 +34,25 @@ li {
   padding: 10px 0;
 }
 .infoBlock {
-  width: 40%;
+  width: 55%;
   margin-right: 10%;
 }
+.infoBlockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filtredSelect {
+  background: transparent;
+  line-height: 2;
+  padding: 10px 20px 10px 0;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid purple;
+  cursor: pointer;
+}
 .addBlock {
-  width: 25%;
+  width: 35%;
 }
 .addForm {
   margin: 25px 0;
@@ -70,6 +84,23 @@ li {
 }
 .formInput.inputError {
   border-color: #f03226;
+}
+.formInput.inputError::placeholder {
+  color: #f03226;
+}
+.selectField {
+  background: transparent;
+  margin-top: 16px;
+  padding-top: 10px;
+  line-height: 2;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid purple;
+  cursor: pointer;
+}
+.selectError {
+  border-color: #f03226;
+  color: #f03226;
 }
 .preload {
   position: fixed;

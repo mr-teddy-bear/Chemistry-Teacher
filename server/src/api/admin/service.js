@@ -5,6 +5,8 @@ import ChemProgress from "../../models/ChemProgress.js";
 import ChemRazdels from "../../models/ChemRazdels.js";
 import bcrypt from "bcrypt";
 
+//---------RAZDEL START-------------
+//---------RAZDEL START-------------
 const addRazdel = async (title, subtitle) => {
   const candidate = await ChemRazdels.findOne({ title, subtitle });
   if (candidate) {
@@ -16,30 +18,70 @@ const addRazdel = async (title, subtitle) => {
     subtitle,
   });
   await newRazdel.save();
-  return newRazdel;
+  return getRazdel();
 };
 
-const addTest = async (title, number, razdelTitle, razdelSubtitle) => {
-  const candidate = await ChemThemes.findOne({ title, number });
+const deleteRazdel = async (id) => {
+  const candidate = await ChemRazdels.deleteOne({ _id: id });
+  return getRazdel();
+};
+
+const getRazdel = async () => {
+  const razdels = await ChemRazdels.find();
+  const filtredRazdels = razdels.map((razdel, idx) => {
+    return {
+      number: idx + 1,
+      id: razdel._id,
+      title: razdel.title,
+      subtitle: razdel.subtitle,
+    };
+  });
+  return filtredRazdels;
+};
+//---------RAZDEL END-------------
+//---------RAZDEL END-------------
+
+//---------TEST START-------------
+//---------TEST START-------------
+const addTest = async (number, question, razdel) => {
+  const candidate = await ChemThemes.findOne({ number, title: question });
   if (candidate) {
-    throw new Error("Такая тема уже создана");
+    throw new Error("Такой тест уже создан");
   }
 
-  const razdel = await ChemRazdels.findOne({
-    title: razdelTitle,
-    subtitle: razdelSubtitle,
-  });
-  if (!razdel) {
-    throw new Error("Невозможно добавить тему в несуществующий класс");
-  }
   const newTest = new ChemThemes({
-    title,
+    title: question,
     number,
-    razdelId: razdel._id,
+    razdelId: razdel,
   });
   await newTest.save();
-  return newTest;
+  return getTest();
 };
+
+const getTest = async () => {
+  const tests = await ChemThemes.find();
+  const filtredTests = tests.map(async (test, idx) => {
+    const razdelInfo = await ChemRazdels.findOne({ _id: test.razdelId });
+    return {
+      number: test.number,
+      id: test._id,
+      title: test.title,
+      razdelId: test.razdelId,
+      razdelTitle: `${razdelInfo.title} ${razdelInfo.subtitle}`,
+    };
+  });
+
+  return await Promise.all(filtredTests).then((res) => {
+    return res;
+  });
+};
+
+const deleteTest = async (id) => {
+  const candidate = await ChemThemes.deleteOne({ _id: id });
+  return getTest();
+};
+//---------TEST END-------------
+//---------TEST END-------------
 
 const addQuestion = async (number, descr, testId, answer) => {
   const newQuestion = new ChemQuestions({
@@ -147,4 +189,8 @@ export {
   getUsers,
   changeRazdelStatus,
   changeTestStatus,
+  getRazdel,
+  deleteRazdel,
+  getTest,
+  deleteTest,
 };

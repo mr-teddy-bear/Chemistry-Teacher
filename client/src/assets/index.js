@@ -22,6 +22,8 @@ import adminstudents from "./img/adminstudents.jpg";
 import razdels from "./img/razdels.jpg";
 import progress from "./img/progress.png";
 import questions from "./img/questions.png";
+import test from "./img/test.jpg";
+import results from "./img/results.jpg";
 
 export {
   bio,
@@ -48,4 +50,6 @@ export {
   razdels,
   progress,
   questions,
+  test,
+  results,
 };

@@ -7,23 +7,61 @@ import {
   addRazdel,
   changeRazdelStatus,
   changeTestStatus,
+  getRazdel,
+  deleteRazdel,
+  getTest,
+  deleteTest,
 } from "./service.js";
 
 const addRazdelController = async (req, res) => {
   try {
     const { title, subtitle } = req.body;
-    const razdel = await addRazdel(title, subtitle);
-    res.json({ razdel });
+    const razdels = await addRazdel(title, subtitle);
+    res.json(razdels);
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+const getRazdelController = async (req, res) => {
+  try {
+    const razdels = await getRazdel();
+    res.status(201).json(razdels);
+  } catch (e) {
+    res.status(400).json({ message: e.message || "Bad request" });
+  }
+};
+const deleteRazdelController = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const razdels = await deleteRazdel(id);
+    res.json(razdels);
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
 };
 
+const getTestController = async (req, res) => {
+  try {
+    const tests = await getTest();
+    res.status(201).json(tests);
+  } catch (e) {
+    res.status(400).json({ message: e.message || "Bad request" });
+  }
+};
 const addTestController = async (req, res) => {
   try {
-    const { title, number, razdelTitle, razdelSubtitle } = req.body;
-    const test = await addTest(title, number, razdelTitle, razdelSubtitle);
-    res.json({ test });
+    const { number, question, razdel } = req.body;
+    const tests = await addTest(number, question, razdel);
+    res.json(tests);
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+const deleteTestController = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const tests = await deleteTest(id);
+    res.json(tests);
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
@@ -97,4 +135,8 @@ export {
   addRazdelController,
   changeRazdelStatusController,
   changeTestStatusController,
+  getRazdelController,
+  deleteRazdelController,
+  getTestController,
+  deleteTestController,
 };
