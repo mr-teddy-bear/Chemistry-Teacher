@@ -143,7 +143,7 @@ function AdminTests() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.question}
-                  placeholder="Вопрос"
+                  placeholder="Название"
                 />
                 <Field
                   className={[

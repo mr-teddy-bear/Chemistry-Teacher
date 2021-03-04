@@ -3,6 +3,8 @@ import {
   regUser,
   addUserInTest,
   addQuestion,
+  getQuestion,
+  deleteQuestion,
   getUsers,
   addRazdel,
   changeRazdelStatus,
@@ -13,6 +15,8 @@ import {
   deleteTest,
 } from "./service.js";
 
+//---------RAZDEL START-------------
+//---------RAZDEL START-------------
 const addRazdelController = async (req, res) => {
   try {
     const { title, subtitle } = req.body;
@@ -39,7 +43,11 @@ const deleteRazdelController = async (req, res) => {
     res.status(500).json({ message: e.message });
   }
 };
+//---------RAZDEL END-------------
+//---------RAZDEL END-------------
 
+//---------TEST START-------------
+//---------TEST START-------------
 const getTestController = async (req, res) => {
   try {
     const tests = await getTest();
@@ -66,7 +74,11 @@ const deleteTestController = async (req, res) => {
     res.status(500).json({ message: e.message });
   }
 };
+//---------TEST END-------------
+//---------TEST END-------------
 
+//---------QUESTION START-------------
+//---------QUESTION START-------------
 const addQuestionController = async (req, res) => {
   try {
     const { number, descr, testId, answer } = req.body;
@@ -78,6 +90,25 @@ const addQuestionController = async (req, res) => {
     res.status(400).json({ message: e.message || "Bad request" });
   }
 };
+const getQuestionController = async (req, res) => {
+  try {
+    const questions = await getQuestion();
+    res.status(201).json(questions);
+  } catch (e) {
+    res.status(400).json({ message: e.message || "Bad request" });
+  }
+};
+const deleteQuestionController = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const tests = await deleteQuestion(id);
+    res.json(tests);
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+//---------QUESTION END-------------
+//---------QUESTION END-------------
 
 const regUserController = async (req, res) => {
   try {
@@ -139,4 +170,6 @@ export {
   deleteRazdelController,
   getTestController,
   deleteTestController,
+  getQuestionController,
+  deleteQuestionController,
 };

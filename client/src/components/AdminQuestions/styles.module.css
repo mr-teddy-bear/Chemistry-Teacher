@@ -14,12 +14,114 @@ li {
   background: #fcfcfe;
 }
 .mainContainer {
-  min-height: 100vh;
   max-width: 1380px;
+  min-height: 100vh;
   margin: 50px auto 0 auto;
   padding: 50px 0;
   display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+}
+
+.razdelTable {
+  margin: 25px 0;
+  width: 100%;
+  border-collapse: collapse;
+}
+.razdelTable td {
+  border: 1px solid purple;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 12px;
+}
+.infoBlock {
+  width: 100%;
+  margin-right: 10%;
+}
+.infoBlockHeader {
+  display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
+}
+.filtredSelect {
+  background: transparent;
+  line-height: 2;
+  padding: 10px 20px 10px 0;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid purple;
+  cursor: pointer;
+  margin-left: 30px;
+  font-size: 10px;
+}
+.razdelTable .questionDescr {
+  font-size: 12px;
+  text-align: justify;
+  padding: 0 10px;
+  width: 55%;
+}
+.moreInfoBtn {
+}
+.addBlock {
+  width: 55%;
+}
+.addForm {
+  margin: 25px 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid purple;
+  padding: 0 20px 20px 20px;
+}
+.btn {
+  margin-top: 15px !important;
+  color: purple !important;
+  border: 1px solid rgba(128, 0, 128, 0.5) !important;
+}
+.btn:focus {
+  border-color: purple !important;
+}
+.formInput {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid purple;
+  font-weight: bold;
+  color: #909090;
+  line-height: 2;
+  font-size: 1rem;
+  margin-top: 16px;
+  padding-top: 10px;
+  height: 1.1876em;
+  background: transparent;
+}
+.formInput.inputError {
+  border-color: #f03226;
+}
+.formInput.inputError::placeholder {
+  color: #f03226;
+}
+.selectField {
+  background: transparent;
+  margin-top: 16px;
+  padding-top: 10px;
+  line-height: 2;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid purple;
+  cursor: pointer;
+}
+.selectError {
+  border-color: #f03226;
+  color: #f03226;
+}
+.preload {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
 }

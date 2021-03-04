@@ -19,6 +19,15 @@ import {
   DELETE_TEST_FAILURE,
   DELETE_TEST_REQUEST,
   DELETE_TEST_SUCCESS,
+  GET_QUESTION_FAILURE,
+  GET_QUESTION_REQUEST,
+  GET_QUESTION_SUCCESS,
+  ADD_QUESTION_FAILURE,
+  ADD_QUESTION_REQUEST,
+  ADD_QUESTION_SUCCESS,
+  DELETE_QUESTION_FAILURE,
+  DELETE_QUESTION_REQUEST,
+  DELETE_QUESTION_SUCCESS,
 } from "../actionTypes";
 import history from "../history";
 
@@ -131,6 +140,57 @@ export function deleteTestRequest() {
     type: DELETE_TEST_REQUEST,
   };
 }
+export function getQuestionFailure(message) {
+  return {
+    type: GET_QUESTION_FAILURE,
+    payload: message,
+  };
+}
+export function getQuestionSuccess(allQuestion) {
+  return {
+    type: GET_QUESTION_SUCCESS,
+    payload: allQuestion,
+  };
+}
+export function getQuestionRequest() {
+  return {
+    type: GET_QUESTION_REQUEST,
+  };
+}
+export function addQuestionFailure(message) {
+  return {
+    type: ADD_QUESTION_FAILURE,
+    payload: message,
+  };
+}
+export function addQuestionSuccess(allQuestion) {
+  return {
+    type: ADD_QUESTION_SUCCESS,
+    payload: allQuestion,
+  };
+}
+export function addQuestionRequest() {
+  return {
+    type: ADD_QUESTION_REQUEST,
+  };
+}
+export function deleteQuestionFailure(message) {
+  return {
+    type: DELETE_QUESTION_FAILURE,
+    payload: message,
+  };
+}
+export function deleteQuestionSuccess(allQuestion) {
+  return {
+    type: DELETE_QUESTION_SUCCESS,
+    payload: allQuestion,
+  };
+}
+export function deleteQuestionRequest() {
+  return {
+    type: DELETE_QUESTION_REQUEST,
+  };
+}
 
 export const getClassInfo = () => async (dispatch) => {
   dispatch(getClassInfoRequest());
@@ -202,5 +262,44 @@ export const deleteTest = (id) => async (dispatch) => {
     dispatch(deleteTestSuccess(allTests.data));
   } catch (e) {
     dispatch(deleteTestFailure(e.message));
+  }
+};
+
+export const getQuestion = () => async (dispatch) => {
+  dispatch(getQuestionRequest());
+  try {
+    const allQuestion = await axios.get("http://localhost:3001/admin/question");
+
+    dispatch(getQuestionSuccess(allQuestion.data));
+  } catch (e) {
+    dispatch(getQuestionFailure(e.message));
+  }
+};
+
+export const addQuestion = (questionData) => async (dispatch) => {
+  dispatch(addQuestionRequest());
+  try {
+    const allQuestion = await axios.post(
+      "http://localhost:3001/admin/question",
+      questionData
+    );
+    dispatch(addQuestionSuccess(allQuestion.data));
+  } catch (e) {
+    dispatch(addQuestionFailure(e.message));
+  }
+};
+
+export const deleteQuestion = (id) => async (dispatch) => {
+  dispatch(deleteQuestionRequest());
+  try {
+    const allQuestion = await axios.delete(
+      "http://localhost:3001/admin/question",
+      {
+        data: { id },
+      }
+    );
+    dispatch(deleteQuestionSuccess(allQuestion.data));
+  } catch (e) {
+    dispatch(deleteQuestionFailure(e.message));
   }
 };

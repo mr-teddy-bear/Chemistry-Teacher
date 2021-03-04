@@ -18,6 +18,15 @@ import {
   DELETE_TEST_FAILURE,
   DELETE_TEST_REQUEST,
   DELETE_TEST_SUCCESS,
+  GET_QUESTION_FAILURE,
+  GET_QUESTION_REQUEST,
+  GET_QUESTION_SUCCESS,
+  ADD_QUESTION_FAILURE,
+  ADD_QUESTION_REQUEST,
+  ADD_QUESTION_SUCCESS,
+  DELETE_QUESTION_FAILURE,
+  DELETE_QUESTION_REQUEST,
+  DELETE_QUESTION_SUCCESS,
 } from "../actionTypes";
 
 const initialState = {
@@ -27,6 +36,7 @@ const initialState = {
   error: "",
   razdels: [],
   tests: [],
+  questions: [],
 };
 
 function adminReducer(state = initialState, { type, payload }) {
@@ -127,6 +137,7 @@ function adminReducer(state = initialState, { type, payload }) {
         ...state,
         isRequesting: false,
         tests: [...payload],
+        message: "Новая тема добавлена",
       };
     case DELETE_TEST_REQUEST:
       return {
@@ -146,6 +157,62 @@ function adminReducer(state = initialState, { type, payload }) {
         isRequesting: false,
         tests: [...payload],
         message: "Тест удален",
+      };
+    case GET_QUESTION_REQUEST:
+      return {
+        ...state,
+        isRequesting: true,
+      };
+    case GET_QUESTION_FAILURE:
+      return {
+        ...state,
+        isRequesting: false,
+        message: "Что-то пошло не так",
+        error: payload,
+      };
+    case GET_QUESTION_SUCCESS:
+      return {
+        ...state,
+        isRequesting: false,
+        questions: [...payload],
+      };
+    case ADD_QUESTION_REQUEST:
+      return {
+        ...state,
+        isRequesting: true,
+      };
+    case ADD_QUESTION_FAILURE:
+      return {
+        ...state,
+        isRequesting: false,
+        message: "Что-то пошло не так",
+        error: payload,
+      };
+    case ADD_QUESTION_SUCCESS:
+      return {
+        ...state,
+        isRequesting: false,
+        questions: [...payload],
+        message: "Вопрос добавлен",
+      };
+    case DELETE_QUESTION_REQUEST:
+      return {
+        ...state,
+        isRequesting: true,
+      };
+    case DELETE_QUESTION_FAILURE:
+      return {
+        ...state,
+        isRequesting: false,
+        message: "Что-то пошло не так",
+        error: payload,
+      };
+    case DELETE_QUESTION_SUCCESS:
+      return {
+        ...state,
+        isRequesting: false,
+        questions: [...payload],
+        message: "Вопрос удален",
       };
     // case CHANGE_TEST_STATUS:
     //   return {

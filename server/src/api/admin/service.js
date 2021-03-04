@@ -83,6 +83,8 @@ const deleteTest = async (id) => {
 //---------TEST END-------------
 //---------TEST END-------------
 
+//---------QUESTION START-------------
+//---------QUESTION START-------------
 const addQuestion = async (number, descr, testId, answer) => {
   const newQuestion = new ChemQuestions({
     number,
@@ -93,6 +95,34 @@ const addQuestion = async (number, descr, testId, answer) => {
   await newQuestion.save();
   return newQuestion;
 };
+
+const getQuestion = async () => {
+  const questions = await ChemQuestions.find();
+  const filtredQuestions = questions.map(async (question) => {
+    const testInfo = await ChemThemes.findOne({ _id: question.testId });
+    const razdelInfo = await ChemRazdels.findOne({ _id: testInfo.razdelId });
+    return {
+      number: question.number,
+      id: question._id,
+      descr: question.descr,
+      answer: question.answer,
+      testId: question.testId,
+      testTitle: `${testInfo.number}. ${testInfo.title}`,
+      razdelTitle: `${razdelInfo.title} ${razdelInfo.subtitle}`,
+      razdelId: testInfo.razdelId,
+    };
+  });
+  return await Promise.all(filtredQuestions).then((res) => {
+    return res;
+  });
+};
+
+const deleteQuestion = async (id) => {
+  const candidate = await ChemThemes.deleteOne({ _id: id });
+  return getQuestion();
+};
+//---------QUESTION END-------------
+//---------QUESTION END-------------
 
 const regUser = async (email, password, name) => {
   const candidate = await ChemUsers.findOne({ email });
@@ -193,4 +223,6 @@ export {
   deleteRazdel,
   getTest,
   deleteTest,
+  getQuestion,
+  deleteQuestion,
 };

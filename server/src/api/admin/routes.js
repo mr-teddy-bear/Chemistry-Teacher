@@ -12,6 +12,8 @@ import {
   deleteRazdelController,
   getTestController,
   deleteTestController,
+  getQuestionController,
+  deleteQuestionController,
 } from "./controller.js";
 //import validation from '../../midleware/validation';
 //import regSchema from '../../midleware/validationLoginSchema';
@@ -27,10 +29,15 @@ router.post("/test", addTestController);
 router.get("/test", getTestController);
 router.delete("/test", deleteTestController);
 
-router.post("/addQuestion", addQuestionController);
+router.post("/question", addQuestionController);
+router.get("/question", getQuestionController);
+router.delete("/question", deleteQuestionController);
+
 router.post("/regUser", regUserController);
-router.post("/addUserInTest", addUserInTestController);
 router.get("/getUsers", getUsersController);
+
+router.post("/addUserInTest", addUserInTestController);
+
 router.post("/changeRazdelStatus", changeRazdelStatusController);
 router.post("/changeTestStatus", changeTestStatusController);
 
