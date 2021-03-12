@@ -150,7 +150,7 @@ function AdminQuestions() {
         <div className={styles.addBlock}>
           <h2>Добавить вопрос</h2>
           <Formik
-            initialValues={{ number: "", question: "", razdel: "", answer: "" }}
+            initialValues={{ number: "", descr: "", testId: "", answer: "" }}
             validationSchema={validationSchema}
             onSubmit={(values, { resetForm }) => {
               dispatch(addQuestion(values));
@@ -192,7 +192,7 @@ function AdminQuestions() {
                       : "",
                   ].join(" ")}
                   type="text"
-                  name="question"
+                  name="descr"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.question}
@@ -216,7 +216,7 @@ function AdminQuestions() {
                     errors.razdel && touched.razdel ? styles.selectError : "",
                   ].join(" ")}
                   as="select"
-                  name="razdel"
+                  name="testId"
                 >
                   <option disabled selected value="">
                     Выберите тест

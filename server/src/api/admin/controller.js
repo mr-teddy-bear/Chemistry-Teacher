@@ -82,10 +82,8 @@ const deleteTestController = async (req, res) => {
 const addQuestionController = async (req, res) => {
   try {
     const { number, descr, testId, answer } = req.body;
-    const question = await addQuestion(number, descr, testId, answer);
-    res.status(201).json({
-      message: `Создан новый вопрос ${question}`,
-    });
+    const questions = await addQuestion(number, descr, testId, answer);
+    res.status(201).json(questions);
   } catch (e) {
     res.status(400).json({ message: e.message || "Bad request" });
   }

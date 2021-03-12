@@ -57,7 +57,7 @@ function AdminTests() {
               </option>
               {razdels.map((razdel) => {
                 return (
-                  <option value={razdel.id}>
+                  <option key={razdel.id} value={razdel.id}>
                     {razdel.title} {razdel.subtitle}
                   </option>
                 );

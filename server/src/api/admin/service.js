@@ -59,7 +59,7 @@ const addTest = async (number, question, razdel) => {
 };
 
 const getTest = async () => {
-  const tests = await ChemThemes.find();
+  const tests = await ChemThemes.find().sort({ _id: "desc" });
   const filtredTests = tests.map(async (test, idx) => {
     const razdelInfo = await ChemRazdels.findOne({ _id: test.razdelId });
     return {
@@ -93,11 +93,11 @@ const addQuestion = async (number, descr, testId, answer) => {
     answer,
   });
   await newQuestion.save();
-  return newQuestion;
+  return getQuestion();
 };
 
 const getQuestion = async () => {
-  const questions = await ChemQuestions.find();
+  const questions = await ChemQuestions.find().sort({ _id: "desc" });
   const filtredQuestions = questions.map(async (question) => {
     const testInfo = await ChemThemes.findOne({ _id: question.testId });
     const razdelInfo = await ChemRazdels.findOne({ _id: testInfo.razdelId });
@@ -118,7 +118,7 @@ const getQuestion = async () => {
 };
 
 const deleteQuestion = async (id) => {
-  const candidate = await ChemThemes.deleteOne({ _id: id });
+  const candidate = await ChemQuestions.deleteOne({ _id: id });
   return getQuestion();
 };
 //---------QUESTION END-------------
